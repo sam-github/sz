@@ -1,9 +1,12 @@
-#include<complex.h>
-#include<inttypes.h>
-#include<limits.h>
-#include<stddef.h>
-#include<stdio.h>
-#include<stdlib.h>
+#include <complex.h>
+#include <inttypes.h>
+#include <limits.h>
+#include <stddef.h>
+#include <stdio.h>
+#include <stdlib.h>
+#include <time.h>
+
+#include <sys/types.h>
 
 #define SZ(x) printf("%2zd bytes " #x "%s\n", sizeof(x), ((x) 0 > (x) -1) ? "" : " (unsigned)")
 #define SZ2(x) printf("%2zd bytes " #x "\n", sizeof(x))
@@ -35,7 +38,7 @@ int main()
     SZ(float);
     SZ(double);
     SZ(long double);
-    SZ(quad_t);
+    /*SZ(quad_t);*/
     SZ(time_t);
     SZ(suseconds_t);
     SZ(pid_t);
