@@ -1,12 +1,14 @@
-#include <complex.h>
-#include <inttypes.h>
-#include <limits.h>
-#include <stddef.h>
-#include <stdio.h>
-#include <stdlib.h>
-#include <time.h>
+#include<complex.h>
+#include<inttypes.h>
+#include<limits.h>
+#include<stddef.h>
+#include<stdio.h>
+#include<stdlib.h>
 
-#include <sys/types.h>
+#include<netinet/in.h>
+
+#include<sys/socket.h>
+#include<sys/un.h>
 
 #define SZ(x) printf("%2zd bytes " #x "%s\n", sizeof(x), ((x) 0 > (x) -1) ? "" : " (unsigned)")
 #define SZ2(x) printf("%2zd bytes " #x "\n", sizeof(x))
@@ -38,7 +40,7 @@ int main()
     SZ(float);
     SZ(double);
     SZ(long double);
-    /*SZ(quad_t);*/
+    SZ(quad_t);
     SZ(time_t);
     SZ(suseconds_t);
     SZ(pid_t);
@@ -58,11 +60,18 @@ int main()
     SZ(big_negative_enum);
     SZ2(empty_struct);
     SZ2(sparse_struct);
+
 #ifdef __cplusplus
     SZ(bool);
     SZ2(empty_abstract_class);
     SZ2(member_function);
 #endif
+
+    SZ2(struct sockaddr);
+    SZ2(struct sockaddr_in);
+    SZ2(struct sockaddr_in6);
+    SZ2(struct sockaddr_un);
+
     return 0;
 }
 
