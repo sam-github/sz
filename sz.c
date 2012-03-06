@@ -1,3 +1,9 @@
+/*
+Copyright (c) Sam Roberts <vieuxtech@gmail.com>, see COPYING
+
+Utility to print the sizes of various system types.
+*/
+
 #include<complex.h>
 #include<inttypes.h>
 #include<limits.h>
@@ -10,8 +16,8 @@
 #include<sys/socket.h>
 #include<sys/un.h>
 
-#define SZ(x) printf("%2zd bytes " #x "%s\n", sizeof(x), ((x) 0 > (x) -1) ? "" : " (unsigned)")
-#define SZ2(x) printf("%2zd bytes " #x "\n", sizeof(x))
+#define SZ(x) printf("%3zd bytes " #x "%s\n", sizeof(x), ((x) 0 > (x) -1) ? "" : " (unsigned)")
+#define SZ2(x) printf("%3zd bytes " #x "\n", sizeof(x))
 
 typedef void function(void);
 typedef enum { spe = 0xFF } small_positive_enum;
@@ -28,8 +34,23 @@ class empty_abstract_class { virtual int member(); };
 typedef void (empty_struct::*member_function)();
 #endif
 
+const char* endian()
+{
+    unsigned endian = 1;
+    const char* first = (char*) &endian;
+    const char* last = first + sizeof(endian) - 1;
+    if (*first == 1)
+        return "little";
+    else if (*last == 1)
+        return "big";
+    else
+        return "unknown";
+}
+
 int main()
 {
+    printf("   endian %s\n", endian());
+    
     SZ(void*);
     SZ(function*);
     SZ(char);
@@ -61,16 +82,16 @@ int main()
     SZ2(empty_struct);
     SZ2(sparse_struct);
 
+    SZ2(struct sockaddr);
+    SZ2(struct sockaddr_in);
+    SZ2(struct sockaddr_in6);
+    SZ2(struct sockaddr_un);
+
 #ifdef __cplusplus
     SZ(bool);
     SZ2(empty_abstract_class);
     SZ2(member_function);
 #endif
-
-    SZ2(struct sockaddr);
-    SZ2(struct sockaddr_in);
-    SZ2(struct sockaddr_in6);
-    SZ2(struct sockaddr_un);
 
     return 0;
 }
