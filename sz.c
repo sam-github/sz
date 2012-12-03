@@ -56,6 +56,7 @@ int main()
     SZ(char);
     SZ(short);
     SZ(int);
+    SZ(uint);
     SZ(long);
     SZ(long long);
     SZ(float);
